@@ -6,40 +6,39 @@ import { ErrorsService } from './tools/errors.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AdministradorService {
+export class AlumnosService {
 
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
   ) { }
-
-  public esquemaAdmin() {
+  public esquemaAlumno(){
     return {
       'rol': '',
-      'clave_admin': '',
+      'id_matricula': '',
       'first_name': '',
       'last_name': '',
       'email': '',
       'password': '',
       'confirmar_password': '',
-      'telefono': '',
+      'fecha_nacimiento': '',
+      'curp': '',
       'rfc': '',
       'edad': '',
-      'ocupacion': ''
+      'telefono': '',
+      'ocupacion': '',
     }
   }
-
   //Validación para el formulario
   // dato de tipo any -> jason
-  
-  public validarAdmin(data: any, editar: boolean) {
-    console.log("Validando admin... ", data);
+  public validarAlumno(data: any, editar: boolean) {
+    console.log("Validando alumno... ", data);
     // guardamos los textos de requerido si es email etc.
     let error: any = [];
 
-    if (!this.validatorService.required(data["clave_admin"])) {
-      error["clave_admin"] = this.errorService.required;
+    if (!this.validatorService.required(data["id_matricula"])) {
+      error["id_matricula"] = this.errorService.required;
     }
 
     if (!this.validatorService.required(data["first_name"])) {
@@ -68,6 +67,18 @@ export class AdministradorService {
       }
     }
 
+    if (!editar) {
+      if (!this.validatorService.required(data["fecha_nacimiento"])) {
+        error["fecha_nacimiento"] = this.errorService.required;
+      }
+    }
+
+    if (!editar) {
+      if (!this.validatorService.required(data["curp"])) {
+        error["curp"] = this.errorService.required;
+      }
+    }
+    
     if (!this.validatorService.required(data["rfc"])) {
       error["rfc"] = this.errorService.required;
     } else if (!this.validatorService.min(data["rfc"], 12)) {
@@ -95,5 +106,4 @@ export class AdministradorService {
     //Return arreglo
     return error;
   }
-
 }

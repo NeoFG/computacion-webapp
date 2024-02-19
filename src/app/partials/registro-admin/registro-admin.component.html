@@ -7,7 +7,6 @@
                     <label class="title-user" for="tipo_usuario">Ingresa los datos del administrador</label>
                 </div>
             </div>
-
             <!-- Campos del formulario -->
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>ID de administrador</mat-label>
@@ -32,7 +31,7 @@
                 <input matInput [(ngModel)]="admin.email" placeholder="Escribe correo electrónico" [disabled]="editar">
             </mat-form-field>
             <div *ngIf="errors.email" class="invalid-feedback">{{ errors.email }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline" *ngIf="!editar">
                 <mat-label>Contraseña</mat-label>
                 <input matInput [(ngModel)]="admin.password" type="{{ inputType_1 }}" placeholder="Escribe contraseña">
@@ -40,7 +39,7 @@
                     'visibility'}}</mat-icon>
             </mat-form-field>
             <div *ngIf="errors.password" class="invalid-feedback">{{ errors.password }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline" *ngIf="!editar">
                 <mat-label>Confirmar contraseña</mat-label>
                 <input matInput [(ngModel)]="admin.confirmar_password" type="{{ inputType_2 }}"
@@ -49,25 +48,25 @@
                     'visibility'}}</mat-icon>
             </mat-form-field>
             <div *ngIf="errors.confirmar_password" class="invalid-feedback">{{ errors.confirmar_password }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Teléfono</mat-label>
                 <input matInput [(ngModel)]="admin.telefono" mask='(000) 000-0000' placeholder="Escribe teléfono">
             </mat-form-field>
             <div *ngIf="errors.telefono" class="invalid-feedback">{{ errors.telefono }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>RFC</mat-label>
                 <input matInput [(ngModel)]="admin.rfc" placeholder="Escribe RFC" style="text-transform: uppercase;">
             </mat-form-field>
             <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Edad</mat-label>
                 <input matInput [(ngModel)]="admin.edad" placeholder="Escribe la edad">
             </mat-form-field>
             <div *ngIf="errors.edad" class="invalid-feedback">{{ errors.edad }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Ocupación</mat-label>
                 <input matInput [(ngModel)]="admin.ocupacion" placeholder="Escribe la ocupación">
@@ -79,7 +78,6 @@
                 <button *ngIf="!editar" class="btn btn-primary" type="submit" (click)="registrar()">Registrar</button>
                 <button *ngIf="editar" class="btn btn-primary" type="submit" (click)="actualizar()">Actualizar</button>
             </div>
-            
         </div>
     </div>
 </div>

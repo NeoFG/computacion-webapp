@@ -34,7 +34,7 @@ export class RegistroAdminComponent implements OnInit {
     this.admin = this.administradoresService.esquemaAdmin();
     this.admin.rol = this.rol;
     
-    console.log("Admin", this.admin);
+    console.log("Admin: ", this.admin);
   }
 
   public regresar() {

@@ -11,7 +11,7 @@ export class ValidatorService {
   required(input: any) {
     return (input != undefined && input != null && input != "" && input.toString().trim().length > 0);
   }
-  // mide la longitud del input
+
   max(input: any, size: any) {
     return (input.length <= size);
   }

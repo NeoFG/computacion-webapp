@@ -6,7 +6,7 @@ import { ErrorsService } from './tools/errors.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AdministradorService {
+export class MaestrosService {
 
   constructor(
     private http: HttpClient,
@@ -14,32 +14,33 @@ export class AdministradorService {
     private errorService: ErrorsService,
   ) { }
 
-  public esquemaAdmin() {
+  public esquemaMaestro(){
     return {
       'rol': '',
-      'clave_admin': '',
+      'id_trabajador': '',
       'first_name': '',
       'last_name': '',
       'email': '',
       'password': '',
       'confirmar_password': '',
+      'fecha_nacimiento': '',
       'telefono': '',
       'rfc': '',
-      'edad': '',
-      'ocupacion': ''
+      'cubiculo': '',
+      'area_investigacion': '',
+      'materias_json': []
     }
   }
 
   //Validación para el formulario
   // dato de tipo any -> jason
-  
-  public validarAdmin(data: any, editar: boolean) {
-    console.log("Validando admin... ", data);
+  public validarMaestro(data: any, editar: boolean) {
+    console.log("Validando maestro... ", data);
     // guardamos los textos de requerido si es email etc.
     let error: any = [];
 
-    if (!this.validatorService.required(data["clave_admin"])) {
-      error["clave_admin"] = this.errorService.required;
+    if (!this.validatorService.required(data["id_trabajador"])) {
+      error["id_trabajador"] = this.errorService.required;
     }
 
     if (!this.validatorService.required(data["first_name"])) {
@@ -68,6 +69,16 @@ export class AdministradorService {
       }
     }
 
+    if (!editar) {
+      if (!this.validatorService.required(data["fecha_nacimiento"])) {
+        error["fecha_nacimiento"] = this.errorService.required;
+      }
+    }
+    
+    if (!this.validatorService.required(data["telefono"])) {
+      error["telefono"] = this.errorService.required;
+    }
+
     if (!this.validatorService.required(data["rfc"])) {
       error["rfc"] = this.errorService.required;
     } else if (!this.validatorService.min(data["rfc"], 12)) {
@@ -78,22 +89,15 @@ export class AdministradorService {
       alert("La longitud de caracteres deL RFC es mayor, deben ser 13");
     }
 
-    if (!this.validatorService.required(data["edad"])) {
-      error["edad"] = this.errorService.required;
-    } else if (!this.validatorService.numeric(data["edad"])) {
-      alert("El formato es solo números");
+    if (!this.validatorService.required(data["cubiculo"])) {
+      error["cubiculo"] = this.errorService.required;
     }
 
-    if (!this.validatorService.required(data["telefono"])) {
-      error["telefono"] = this.errorService.required;
-    }
-
-    if (!this.validatorService.required(data["ocupacion"])) {
-      error["ocupacion"] = this.errorService.required;
+    if (!this.validatorService.required(data["area_investigacion"])) {
+      error["area_investigacion"] = this.errorService.required;
     }
 
     //Return arreglo
     return error;
   }
-
 }
