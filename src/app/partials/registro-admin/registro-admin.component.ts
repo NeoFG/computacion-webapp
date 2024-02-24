@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AdministradorService } from 'src/app/services/administrador.service';
-
-// Usamos jquery
+//Para poder usar jquery definir esto
 declare var $: any;
 
 @Component({
@@ -11,7 +10,7 @@ declare var $: any;
 })
 export class RegistroAdminComponent implements OnInit {
   // Entrada de datos con el imput por el componente
-  @Input() rol:string = "";
+  @Input() rol: string = "";
 
   public admin: any = {};
   public editar: boolean = false;
@@ -24,7 +23,6 @@ export class RegistroAdminComponent implements OnInit {
   public inputType_1: string = 'password';
   public inputType_2: string = 'password';
 
-
   constructor(
     private administradoresService: AdministradorService
   ) { }
@@ -33,7 +31,7 @@ export class RegistroAdminComponent implements OnInit {
   ngOnInit(): void {
     this.admin = this.administradoresService.esquemaAdmin();
     this.admin.rol = this.rol;
-    
+
     console.log("Admin: ", this.admin);
   }
 

@@ -9,10 +9,10 @@
             </div>
             <!-- Campos del formulario -->
             <mat-form-field class="mat-input" appearance="outline">
-                <mat-label>ID/Matricula</mat-label>
-                <input matInput [(ngModel)]="alumno.id_matricula" name="id" placeholder="Escribe clave de administrador">
+                <mat-label>ID/Matrícula</mat-label>
+                <input matInput [(ngModel)]="alumno.matricula" name="id" placeholder="Escribe ID o matrícula">
             </mat-form-field>
-            <div *ngIf="errors.clave_admin" class="invalid-feedback">{{ errors.clave_admin }}</div>
+            <div *ngIf="errors.matricula" class="invalid-feedback">{{ errors.matricula }}</div>
 
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Nombre</mat-label>
@@ -52,8 +52,8 @@
             <!-- Poner la fecha de nacimiento -->
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Fecha de nacimiento</mat-label>
-                <input matInput [matDatepicker]="picker" [(ngModel)]="alumno.fecha_nacimiento"
-                    placeholder="Escribe fecha de nacimiento">
+                <input matInput [matDatepicker]="picker" [(ngModel)]="alumno.fecha_nacimiento" (focus)="picker.open()"
+                    placeholder="Agregar fecha" (dateChange)="changeFecha($event)" type="string">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -61,22 +61,22 @@
 
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>CURP</mat-label>
-                <input matInput [(ngModel)]="alumno.curp" placeholder="Escribe RFC" style="text-transform: uppercase;">
+                <input matInput [(ngModel)]="alumno.curp" placeholder="Escribe CURP" style="text-transform: uppercase;">
             </mat-form-field>
-            <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
-            
+            <div *ngIf="errors.curp" class="invalid-feedback">{{ errors.curp }}</div>
+
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>RFC</mat-label>
                 <input matInput [(ngModel)]="alumno.rfc" placeholder="Escribe RFC" style="text-transform: uppercase;">
             </mat-form-field>
             <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Edad</mat-label>
-                <input matInput [(ngModel)]="alumno.edad" placeholder="Escribe la edad">
+                <input matInput [(ngModel)]="alumno.edad" mask='00' placeholder="Escribe edad">
             </mat-form-field>
             <div *ngIf="errors.edad" class="invalid-feedback">{{ errors.edad }}</div>
-            
+
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Teléfono</mat-label>
                 <input matInput [(ngModel)]="alumno.telefono" mask='(000) 000-0000' placeholder="Escribe teléfono">
@@ -85,7 +85,7 @@
 
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Ocupación</mat-label>
-                <input matInput [(ngModel)]="alumno.ocupacion" placeholder="Escribe la ocupación">
+                <input matInput [(ngModel)]="alumno.ocupacion" placeholder="Escribe teléfono">
             </mat-form-field>
             <div *ngIf="errors.ocupacion" class="invalid-feedback">{{ errors.ocupacion }}</div>
 

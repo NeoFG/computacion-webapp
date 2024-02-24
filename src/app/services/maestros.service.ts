@@ -1,7 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +17,10 @@ export class MaestrosService {
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
-    private errorService: ErrorsService,
+    private errorService: ErrorsService
   ) { }
 
-  public esquemaMaestro(){
+  public esquemaMaestro() {
     return {
       'rol': '',
       'id_trabajador': '',
@@ -69,14 +75,8 @@ export class MaestrosService {
       }
     }
 
-    if (!editar) {
-      if (!this.validatorService.required(data["fecha_nacimiento"])) {
-        error["fecha_nacimiento"] = this.errorService.required;
-      }
-    }
-    
-    if (!this.validatorService.required(data["telefono"])) {
-      error["telefono"] = this.errorService.required;
+    if (!this.validatorService.required(data["fecha_nacimiento"])) {
+      error["fecha_nacimiento"] = this.errorService.required;
     }
 
     if (!this.validatorService.required(data["rfc"])) {
@@ -89,6 +89,10 @@ export class MaestrosService {
       alert("La longitud de caracteres deL RFC es mayor, deben ser 13");
     }
 
+    if (!this.validatorService.required(data["telefono"])) {
+      error["telefono"] = this.errorService.required;
+    }
+
     if (!this.validatorService.required(data["cubiculo"])) {
       error["cubiculo"] = this.errorService.required;
     }
@@ -97,7 +101,13 @@ export class MaestrosService {
       error["area_investigacion"] = this.errorService.required;
     }
 
+    if (data["materias_json"].length == 0) {
+      error["materias_json"] = "Al menos debes elegir una materia";
+      //alert("Debes seleccionar materias para poder registrarte.");
+    }
     //Return arreglo
     return error;
   }
+
+
 }

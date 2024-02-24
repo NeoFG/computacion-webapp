@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MaestrosService } from '../../services/maestros.service';
+import { Location } from '@angular/common';
+import { MaestrosService } from 'src/app/services/maestros.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
-//Usamos jquery
+
+// Usamos jason
 declare var $: any;
 
 @Component({
@@ -10,13 +13,15 @@ declare var $: any;
   styleUrls: ['./registro-maestros.component.scss']
 })
 export class RegistroMaestrosComponent implements OnInit {
+
   @Input() rol: string = "";
 
   // creo mi jason para maestro
   public maestro: any = {};
-  public editar: boolean = false;
-  // jason de error
   public errors: any = {};
+  public editar: boolean = false;
+  public idUser: Number = 0;
+
   //Para contraseñas
   public hide_1: boolean = false;
   public hide_2: boolean = false;
@@ -24,15 +29,18 @@ export class RegistroMaestrosComponent implements OnInit {
   public inputType_1: string = 'password';
   public inputType_2: string = 'password';
 
+  //Check
+  public valoresCheckbox: any = [];
+  public materias_json: any[] = [];
+
   // Arreglo estatico para el select
-  public areas:any = [
-    { value: '1', viewValue: 'Desarollo Web' },
-    { value: '2', viewValue: 'Programacion' },
+  public areas: any[] = [
+    { value: '1', viewValue: 'Desarrollo Web' },
+    { value: '2', viewValue: 'Programación' },
     { value: '3', viewValue: 'Bases de datos' },
     { value: '4', viewValue: 'Redes' },
-    { value: '5', viewValue: 'Matematicas' },
+    { value: '5', viewValue: 'Matemáticas' },
   ];
-
   // Arreglo estatico jason
   public materias: any[] = [
     { value: '1', nombre: 'Aplicaciones Web' },
@@ -46,19 +54,24 @@ export class RegistroMaestrosComponent implements OnInit {
     { value: '9', nombre: 'Ingeniería de Software' },
     { value: '10', nombre: 'Administración de S.O.' },
   ];
-
   constructor(
-    private maestrosService: MaestrosService
-  ) { }
+    private location: Location,
+    private maestrosService: MaestrosService,
+    private router: Router,
+    public activatedRoute: ActivatedRoute,
+  ) {
 
-  ngOnInit(): void {
+  }
+
+  ngOnInit() {
     this.maestro = this.maestrosService.esquemaMaestro();
     this.maestro.rol = this.rol;
+    //Imprimir datos en consola
     console.log("Maestro: ", this.maestro);
   }
 
   public regresar() {
-
+    this.location.back();
   }
 
   public registrar() {
@@ -75,6 +88,7 @@ export class RegistroMaestrosComponent implements OnInit {
     }
 
     // TODO: falta registrar
+
   }
 
   //Funciones para password
@@ -100,22 +114,37 @@ export class RegistroMaestrosComponent implements OnInit {
     }
   }
 
+  //Función para detectar el cambio de fecha
+  public changeFecha(event: any) {
+    console.log(event);
+    console.log(event.value.toISOString());
+
+    this.maestro.fecha_nacimiento = event.value.toISOString().split("T")[0];
+    console.log("Fecha: ", this.maestro.fecha_nacimiento);
+  }
+
   public actualizar() {
 
   }
 
   public checkboxChange(event: any) {
-    //console.log("Evento: ", event);
+    console.log("Evento: ", event);
     if (event.checked) {
       this.maestro.materias_json.push(event.source.value)
     } else {
       console.log(event.source.value);
       this.maestro.materias_json.forEach((materia, i) => {
         if (materia == event.source.value) {
-          this.maestro.materias_json.splice(i, 1)
+          // Splice recorre el arreglo de uno en uno
+          this.maestro.materias_json.splice(i, 1);
         }
       });
     }
     console.log("Array materias: ", this.maestro);
+  }
+
+  public changeSelect(event: any) {
+    console.log(event.value);
+    this.maestro.area_investigacion = event.value;
   }
 }

@@ -1,7 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +17,13 @@ export class AlumnosService {
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
-    private errorService: ErrorsService,
+    private errorService: ErrorsService
   ) { }
-  public esquemaAlumno(){
+
+  public esquemaAlumno() {
     return {
       'rol': '',
-      'id_matricula': '',
+      'matricula': '',
       'first_name': '',
       'last_name': '',
       'email': '',
@@ -30,15 +37,15 @@ export class AlumnosService {
       'ocupacion': '',
     }
   }
+
   //Validación para el formulario
   // dato de tipo any -> jason
   public validarAlumno(data: any, editar: boolean) {
     console.log("Validando alumno... ", data);
-    // guardamos los textos de requerido si es email etc.
     let error: any = [];
 
-    if (!this.validatorService.required(data["id_matricula"])) {
-      error["id_matricula"] = this.errorService.required;
+    if (!this.validatorService.required(data["matricula"])) {
+      error["matricula"] = this.errorService.required;
     }
 
     if (!this.validatorService.required(data["first_name"])) {
@@ -67,18 +74,20 @@ export class AlumnosService {
       }
     }
 
-    if (!editar) {
-      if (!this.validatorService.required(data["fecha_nacimiento"])) {
-        error["fecha_nacimiento"] = this.errorService.required;
-      }
+    if (!this.validatorService.required(data["fecha_nacimiento"])) {
+      error["fecha_nacimiento"] = this.errorService.required;
     }
 
-    if (!editar) {
-      if (!this.validatorService.required(data["curp"])) {
-        error["curp"] = this.errorService.required;
-      }
+    if (!this.validatorService.required(data["curp"])) {
+      error["curp"] = this.errorService.required;
+    } else if (!this.validatorService.min(data["curp"], 18)) {
+      error["curp"] = this.errorService.min(18);
+      alert("La longitud de caracteres de la CURP es menor, deben ser 18");
+    } else if (!this.validatorService.max(data["curp"], 18)) {
+      error["curp"] = this.errorService.max(18);
+      alert("La longitud de caracteres de la CURP es mayor, deben ser 18");
     }
-    
+
     if (!this.validatorService.required(data["rfc"])) {
       error["rfc"] = this.errorService.required;
     } else if (!this.validatorService.min(data["rfc"], 12)) {
@@ -106,4 +115,5 @@ export class AlumnosService {
     //Return arreglo
     return error;
   }
+
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AdministradorService {
     private http: HttpClient,
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
+    // private facadeService: FacadeService
   ) { }
 
   public esquemaAdmin() {
@@ -32,10 +34,9 @@ export class AdministradorService {
 
   //Validación para el formulario
   // dato de tipo any -> jason
-  
+
   public validarAdmin(data: any, editar: boolean) {
     console.log("Validando admin... ", data);
-    // guardamos los textos de requerido si es email etc.
     let error: any = [];
 
     if (!this.validatorService.required(data["clave_admin"])) {
@@ -95,5 +96,4 @@ export class AdministradorService {
     //Return arreglo
     return error;
   }
-
 }

@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AlumnosService } from '../../services/alumnos.service';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlumnosService } from 'src/app/services/alumnos.service';
 
 //Jquery
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-registro-alumnos',
@@ -14,27 +16,44 @@ export class RegistroAlumnosComponent implements OnInit {
 
   //Creo mi jason para alumno
   public alumno: any = {};
-
-  public editar: boolean = false;
   public errors: any = {};
+  public editar: boolean = false;
+  public idUser: Number = 0;
+
   //Para contraseñas
   public hide_1: boolean = false;
   public hide_2: boolean = false;
   public inputType_1: string = 'password';
   public inputType_2: string = 'password';
 
+
   constructor(
-    private alumnosService : AlumnosService
-  ){ }
+    private location: Location,
+    private router: Router,
+    public activatedRoute: ActivatedRoute,
+    private alumnosService: AlumnosService
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.alumno = this.alumnosService.esquemaAlumno();
     this.alumno.rol = this.rol;
+    //El primer if valida si existe un parámetro en la URL
+    if (this.activatedRoute.snapshot.params['id'] != undefined) {
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      console.log("ID User: ", this.idUser);
+      //Al iniciar la vista obtiene el usuario por su ID
+      //this.obtenerUserByID();
+    }
+    //Imprimir datos en consola
     console.log("Alumno: ", this.alumno);
   }
 
   public regresar() {
-
+    this.location.back();
   }
 
   public registrar() {
@@ -74,6 +93,15 @@ export class RegistroAlumnosComponent implements OnInit {
       this.inputType_2 = 'password';
       this.hide_2 = false;
     }
+  }
+
+  //Función para detectar el cambio de fecha
+  public changeFecha(event: any) {
+    console.log(event);
+    console.log(event.value.toISOString());
+
+    this.alumno.fecha_nacimiento = event.value.toISOString().split("T")[0];
+    console.log("Fecha: ", this.alumno.fecha_nacimiento);
   }
 
 }
