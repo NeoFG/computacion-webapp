@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdministradorService } from 'src/app/services/administrador.service';
 //Para poder usar jquery definir esto
 declare var $: any;
@@ -24,7 +25,8 @@ export class RegistroAdminComponent implements OnInit {
   public inputType_2: string = 'password';
 
   constructor(
-    private administradoresService: AdministradorService
+    private administradoresService: AdministradorService,
+    private router: Router
   ) { }
 
   // asigno mi esquema del jason al objeto
@@ -41,19 +43,41 @@ export class RegistroAdminComponent implements OnInit {
 
   public registrar() {
 
-    //Validar
-    // Inicializo el jason en un arreglo vacio.
+    /* Validar
+      Inicializo el jason en un arreglo vacio. 
+    */
     this.errors = [];
 
-    // Inyecto el servicio desde constructor
-    // validarAdmin que voy a validar el jason this.admin
-    // y mi bandera para editar
+    /* Inyecto el servicio desde constructor
+     validarAdmin que voy a validar el jason this.admin
+     y mi bandera para editar */
     this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
     if (!$.isEmptyObject(this.errors)) {
       return false;
     }
 
-    // TODO:Después registraremos admin
+    // TODO:Después registraremos admin (hecho)
+    // Validamos que las contrasenias coincidan
+    // Validar la contrasenia
+    // response si trae datos y mandame al login
+
+    if (this.admin.password == this.admin.confirmar_password) {
+      this.administradoresService.registrarAdmin(this.admin).subscribe(
+        (response) => {
+          alert("Usuario registrado correctamente");
+          console.log("Usuario registrado: ", response);
+          this.router.navigate(["/"]);
+        }, (error) => {
+          alert("No se pudo registrar usuario");
+        }
+      );
+
+    } else {
+      // Limpio los campos los pongo en blanco
+      alert("Las contraseñas no coinciden");
+      this.admin.password = "";
+      this.admin.confirmar_password = "";
+    }
   }
 
   public actualizar() {

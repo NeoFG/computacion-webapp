@@ -4,7 +4,9 @@ import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { FacadeService } from './facade.service';
 
+// Configuracion de cabercera para la api
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -17,7 +19,8 @@ export class MaestrosService {
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private facadeService: FacadeService
   ) { }
 
   public esquemaMaestro() {
@@ -109,5 +112,20 @@ export class MaestrosService {
     return error;
   }
 
+  /*Aquí van los servicios HTTP
+    Servicio para registrar un nuevo usuario
+    El /admin esta en la ruta urls.py de la api
+    para pasar como peticion post
+  */
+
+  public registrarMaestros(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.url_api}/maestros/`, data, httpOptions);
+  }
+
+  public obtenerListaMaestros(): Observable<any> {
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    return this.http.get<any>(`${environment.url_api}/lista-maestros/`, { headers: headers });
+  }
 
 }

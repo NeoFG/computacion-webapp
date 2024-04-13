@@ -2,9 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { FacadeService } from './facade.service';
 
+// Configuracion de cabercera para la api
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -17,7 +19,8 @@ export class AlumnosService {
   constructor(
     private http: HttpClient,
     private validatorService: ValidatorService,
-    private errorService: ErrorsService
+    private errorService: ErrorsService,
+    private facadeService: FacadeService
   ) { }
 
   public esquemaAlumno() {
@@ -114,6 +117,22 @@ export class AlumnosService {
 
     //Return arreglo
     return error;
+  }
+
+  /*Aquí van los servicios HTTP
+    Servicio para registrar un nuevo usuario
+    El /admin esta en la ruta urls.py de la api
+    para pasar como peticion post
+  */
+
+  public registrarAlumnos(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.url_api}/alumnos/`, data, httpOptions);
+  }
+
+  public obtenerListaAlumnos(): Observable<any> {
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    return this.http.get<any>(`${environment.url_api}/lista-alumnos/`, { headers: headers });
   }
 
 }

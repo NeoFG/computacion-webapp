@@ -62,7 +62,7 @@ export class RegistroMaestrosComponent implements OnInit {
   ) {
 
   }
-
+  // asigno mi esquema del jason al objeto para poder usar las varibales.
   ngOnInit() {
     this.maestro = this.maestrosService.esquemaMaestro();
     this.maestro.rol = this.rol;
@@ -87,7 +87,30 @@ export class RegistroMaestrosComponent implements OnInit {
       return false;
     }
 
-    // TODO: falta registrar
+    // TODO: falta registrar (hecho)
+    // Validamos que las contrasenias coincidan
+    // Validar la contrasenia
+    // response si trae datos y mandame al login
+    if (this.maestro.password == this.maestro.confirmar_password) {
+      this.maestrosService.registrarMaestros(this.maestro).subscribe(
+        (response)=>{
+          alert("Usuario registrado correctamente");
+          console.log("Usuario registrado",response);
+          this.router.navigate(["/"]);
+        },
+        (error)=>{
+          alert("Las contraseñas no coinciden");
+          this.maestro.password = "";
+          this.maestro.confirmar_password = "";
+        }
+      )
+      
+    } else {
+      // Limpio los campos los pongo en blanco
+      alert("Las contraseñas no coinciden");
+      this.maestro.password = "";
+      this.maestro.confirmar_password = "";
+    }
 
   }
 

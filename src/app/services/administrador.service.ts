@@ -1,8 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ValidatorService } from './tools/validator.service';
 import { ErrorsService } from './tools/errors.service';
+import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { FacadeService } from './facade.service';
+
+// Configuracion de cabercera para la api
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +20,7 @@ export class AdministradorService {
     private http: HttpClient,
     private validatorService: ValidatorService,
     private errorService: ErrorsService,
-    // private facadeService: FacadeService
+    private facadeService: FacadeService
   ) { }
 
   public esquemaAdmin() {
@@ -96,4 +103,21 @@ export class AdministradorService {
     //Return arreglo
     return error;
   }
+
+  /*Aquí van los servicios HTTP
+    Servicio para registrar un nuevo usuario
+    El /admin esta en la ruta urls.py de la api
+    para pasar como peticion post
+  */
+
+  public registrarAdmin(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.url_api}/admin/`, data, httpOptions);
+  }
+
+  public obtenerListaAdmins(): Observable<any> {
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    return this.http.get<any>(`${environment.url_api}/lista-admins/`, { headers: headers });
+  }
+  
 }

@@ -32,9 +32,7 @@ export class RegistroAlumnosComponent implements OnInit {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private alumnosService: AlumnosService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.alumno = this.alumnosService.esquemaAlumno();
@@ -65,7 +63,28 @@ export class RegistroAlumnosComponent implements OnInit {
       return false;
     }
 
-    // TODO:Después registraremos admin
+    // TODO:Después registraremos admin (hecho)
+    // Validamos que las contrasenias coincidan
+    // Validar la contrasenia
+    // response si trae datos y mandame al login
+    if (this.alumno.password == this.alumno.confirmar_password) {
+      this.alumnosService.registrarAlumnos(this.alumno).subscribe(
+        (response) =>{
+          alert("Usuario registrado correctamente");
+          console.log("Usuario registrado: ", response);
+          this.router.navigate(["/"]);
+        },
+        (error)=>{
+          alert("No se pudo registrar");
+        }
+      )
+    }
+    else{
+      // Limpio los campos los pongo en blanco
+      alert("Las contraseñas no coinciden");
+      this.alumno.password = "";
+      this.alumno.confirmar_password = "";
+    }
   }
 
   public actualizar() {

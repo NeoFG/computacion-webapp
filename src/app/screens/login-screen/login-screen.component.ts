@@ -23,22 +23,8 @@ export class LoginScreenComponent implements OnInit {
     private facadeService: FacadeService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
 
-  }
-
-  public login() {
-    // Validar
-    this.errors = [];
-
-    this.errors = this.facadeService.validarLogin(this.username, this.password);
-    if (!$.isEmptyObject(this.errors)) {
-      return false;
-    }
-  }
-
-  public registrar() {
-    this.router.navigate(["registro-usuarios"]);
   }
 
   public showPassword() {
@@ -55,4 +41,29 @@ export class LoginScreenComponent implements OnInit {
     }
 
   }
+
+  public login() {
+    // Validar
+    this.errors = [];
+
+    this.errors = this.facadeService.validarLogin(this.username, this.password);
+    if (!$.isEmptyObject(this.errors)) {
+      return false;
+    }
+
+    // Si pasa la validacion ir a la pagina home
+    this.facadeService.login(this.username, this.password).subscribe(
+      (response) => {
+        this.facadeService.saveUserData(response);
+        this.router.navigate(["home"]);
+      }, (error) => {
+        alert("No se pudo iniciar sesion");
+      }
+    );
+  }
+
+  public registrar() {
+    this.router.navigate(["registro-usuarios"]);
+  }
+
 }
