@@ -40,9 +40,9 @@ export class AdminScreenComponent implements OnInit{
     );
   }
 
-  //Funcion para editar
+  //Funcion para editar parametros por url
   public goEditar(idUser: number) {
-    this.router.navigate(["registro/" + idUser]);
+    this.router.navigate(["registro-usuarios/administrador/" + idUser]);
   }
 
   public delete(idUser: number) {

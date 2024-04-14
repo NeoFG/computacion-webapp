@@ -48,7 +48,7 @@
                         </div>
                         <div class="row mt-3" style="text-align: center;">
                             <div class="form-group col-12">
-                                <mat-radio-group [(ngModel)]="user.tipo_usuario" (change)="radioChange($event)">
+                                <mat-radio-group [(ngModel)]="user.tipo_usuario" (change)="radioChange($event)" [disabled]="editar">
                                     <mat-radio-button value="administrador">Administrador</mat-radio-button>
                                     <mat-radio-button value="alumno">Alumno</mat-radio-button>
                                     <mat-radio-button value="maestro">Maestro</mat-radio-button>
@@ -61,15 +61,15 @@
                         <!-- Formulario del admin -->
                         <section class="registro-admin" *ngIf="isAdmin">
                             <!-- Invoco decorador para cacha el nombre y lo pasa por el registro-screen ts -->
-                            <app-registro-admin [rol]="tipo_user"></app-registro-admin>
+                            <app-registro-admin [rol]="tipo_user" [datos_user]="user" ></app-registro-admin>
                         </section>
                         <!-- Formulario del alumno -->
                         <section class="registro-alumnos" *ngIf="isAlumno">
-                            <app-registro-alumnos [rol]="tipo_user"></app-registro-alumnos>
+                            <app-registro-alumnos [rol]="tipo_user" [datos_user]="user"></app-registro-alumnos>
                         </section>
                         <!-- Formulario del maestro -->
                         <section class="registro-maestros" *ngIf="isMaestro">
-                            <app-registro-maestros [rol]="tipo_user"></app-registro-maestros>
+                            <app-registro-maestros [rol]="tipo_user" [datos_user]="user"></app-registro-maestros>
                         </section>
                     </section>
 
