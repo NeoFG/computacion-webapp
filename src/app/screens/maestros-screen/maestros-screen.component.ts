@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { EliminarUserModalComponent } from 'src/app/modals/eliminar-user-modal/eliminar-user-modal.component';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
 
@@ -108,8 +109,25 @@ export class MaestrosScreenComponent implements OnInit {
   }
 
   public delete(idUser: number) {
+    // console.log("User:",idUser);
+    const dialogRef = this.dialog.open(EliminarUserModalComponent, {
+      data: { id: idUser, rol: 'maestro' },
+      height: '288px',
+      width: '328px',
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.isDelete) {
+        console.log("Maestro eliminado");
+        // Recarga la pagina
+        window.location.reload();
+      } else {
+        alert("Maestro no eliminado");
+        console.log("No se elimino el Maestro");
+      }
+    });
   }
+
 }
 
 //Esto va fuera de la llave que cierra la clase
