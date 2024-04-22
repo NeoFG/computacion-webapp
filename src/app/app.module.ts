@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgChartsModule } from 'ng2-charts';
 
 import { LoginScreenComponent } from './screens/login-screen/login-screen.component';
 import { RegistroScreenComponent } from './screens/registro-screen/registro-screen.component';
@@ -33,6 +34,7 @@ import { AdminScreenComponent } from './screens/admin-screen/admin-screen.compon
 import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.component';
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
+import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
     AdminScreenComponent,
     AlumnosScreenComponent,
     MaestrosScreenComponent,
-    EliminarUserModalComponent
+    EliminarUserModalComponent,
+    GraficasScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,8 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
     MatDialogModule,
     MatSelectModule,
     MatCheckboxModule,
-    HttpClientModule
+    HttpClientModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
