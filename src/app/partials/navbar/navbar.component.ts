@@ -81,4 +81,9 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  // Ruta para las materias
+  // Función para navegar al componente de registro de materias
+  navigateToMaterias() {
+    this.router.navigate(['/registro-materias']);
+  }
 }

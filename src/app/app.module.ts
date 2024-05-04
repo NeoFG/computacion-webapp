@@ -25,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMatDatetimePickerModule } from '@angular-material-components/datetime-picker';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -36,6 +37,7 @@ import { AlumnosScreenComponent } from './screens/alumnos-screen/alumnos-screen.
 import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-screen.component';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
+import { RegistroMateriasComponent } from './partials/registro-materias/registro-materias.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
     AlumnosScreenComponent,
     MaestrosScreenComponent,
     EliminarUserModalComponent,
-    GraficasScreenComponent
+    GraficasScreenComponent,
+    RegistroMateriasComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxMatDatetimePickerModule,
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
