@@ -23,6 +23,11 @@ export class MateriasService {
     private facadeService: FacadeService
   ){}
 
+  // Método para obtener el token de autenticación
+  private getToken(): string {
+    return this.facadeService.getSessionToken();
+  }
+
   // Falta mi horario en el esquema
   public esquemaMateria(){
     return {
@@ -83,8 +88,21 @@ export class MateriasService {
     para pasar como peticion post
   */
 
-  public registrarMateria(materia: any): Observable<any> {
-    return this.http.post<any>(`${environment.url_api}/materias/`, materia, httpOptions);
+  // Método para crear las opciones de solicitud con el token de autenticación
+  private getRequestOptions(): { headers: HttpHeaders } {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return { headers: headers };
   }
+
+  // Método para registrar una materia
+  public registrarMateria(materia: any): Observable<any> {
+    const requestOptions = this.getRequestOptions();
+    return this.http.post<any>(`${environment.url_api}/materias/`, materia, requestOptions);
+  }
+
   
 }
