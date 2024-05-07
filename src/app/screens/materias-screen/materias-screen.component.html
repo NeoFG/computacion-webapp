@@ -61,17 +61,60 @@
                         <td mat-cell *matCellDef="let element"> {{element.hora_final}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="editar">
+                    <!-- <ng-container matColumnDef="editar">
                         <th mat-header-cell *matHeaderCellDef> Actualizar </th>
                         <td mat-cell *matCellDef="let element" class="td-editar">
                             <i class="bi bi-pencil-square" (click)="goEditar(element.id)"></i>
                         </td>
+                    </ng-container> -->
+
+                    <!-- Columna "Editar" -->
+                    <!-- <ng-container matColumnDef="editar">
+                        <th mat-header-cell *matHeaderCellDef> Editar </th>
+                        <td mat-cell *matCellDef="let element" class="td-editar">
+                            
+                            <button mat-icon-button color="primary" (click)="goEditar(element.id)" [disabled]="rol !== 'administrador'">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container> -->
+
+                    <!--  Columna "Editar" -->
+                    <ng-container matColumnDef="editar">
+                        <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+                        <td mat-cell *matCellDef="let element" class="td-editar">
+                            <!-- Mostrar el ícono solo si el usuario es administrador -->
+                            <i class="bi bi-pencil-square" (click)="goEditar(element.id)"
+                                [ngClass]="{'disabled-icon': rol !== 'administrador'}"></i>
+                        </td>
                     </ng-container>
+
+
+                    <!-- <ng-container matColumnDef="eliminar">
+                        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                        <td mat-cell *matCellDef="let element" class="td-eliminar" >
+                            <i class="bi bi-trash3-fill disabled-icon" (click)="delete(element.id) "></i>
+                        </td>
+                    </ng-container> -->
+
+                    <!-- Columna "Eliminar" -->
+                    <!-- <ng-container matColumnDef="eliminar">
+                        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                        <td mat-cell *matCellDef="let element" class="td-eliminar">
+                             Mostrar el botón solo si el usuario es administrador 
+                            <button mat-icon-button color="warn" (click)="delete(element.id)" [disabled]="rol !== 'administrador'"
+                                class="disabled-button">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container> -->
 
                     <ng-container matColumnDef="eliminar">
                         <th mat-header-cell *matHeaderCellDef> Eliminar </th>
                         <td mat-cell *matCellDef="let element" class="td-eliminar">
-                            <i class="bi bi-trash3-fill" (click)="delete(element.id)"></i>
+                            <!-- Mostrar el ícono solo si el usuario es administrador -->
+                            <i class="bi bi-trash3-fill" (click)="delete(element.id)"
+                                [ngClass]="{'disabled-icon': rol !== 'administrador'}"></i>
                         </td>
                     </ng-container>
 

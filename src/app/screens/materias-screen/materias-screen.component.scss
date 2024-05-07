@@ -104,3 +104,21 @@ table {
     font-size: 25px !important;
     text-align: center;
 }
+
+// .disabled-button {
+//     background-color: #f2f2f2;
+//     /* Color de fondo gris */
+//     border: 1px solid #ccc;
+//     /* Borde gris */
+//     color: #999;
+//     /* Color de texto gris */
+//     cursor: not-allowed;
+//     /* Cambia el cursor a "no permitido" */
+// }
+
+.disabled-icon {
+    color: #999;
+    /* Color de ícono gris */
+    cursor: not-allowed;
+    /* Cambia el cursor a "no permitido" */
+}
