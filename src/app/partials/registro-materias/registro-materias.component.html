@@ -45,6 +45,23 @@
             <div *ngIf="errors.programa_educativo" class="invalid-feedback">{{ errors.programa_educativo }}</div>
 
             <!-- TODO: Poner el horario inicio y fin -->
+            <!-- Horario inicio -->
+            <mat-form-field class="mat-input" appearance="outline">
+                <mat-label>Hora inicio</mat-label>
+                <input matInput [(ngModel)]="materia.hora_inicio" [format]="24" placeholder="Selecciona la hora de inicio"
+                    [ngxTimepicker]="pickerInicio">
+                <ngx-material-timepicker #pickerInicio></ngx-material-timepicker>
+            </mat-form-field>
+            <div *ngIf="errors.hora_inicio" class="invalid-feedback">{{ errors.hora_inicio }}</div>
+
+            <!-- Horario final -->
+            <mat-form-field class="mat-input" appearance="outline">
+                <mat-label>Hora final</mat-label>
+                <input matInput [(ngModel)]="materia.hora_final" [format]="24" placeholder="Selecciona la hora final"
+                    [ngxTimepicker]="pickerFinal">
+                <ngx-material-timepicker #pickerFinal></ngx-material-timepicker>
+            </mat-form-field>
+            <div *ngIf="errors.hora_final" class="invalid-feedback">{{ errors.hora_final }}</div>
             
             <!-- Checkbox de los dias -->
             <div class="select-materias">

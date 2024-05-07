@@ -36,6 +36,8 @@ export class MateriasService {
       'seccion': '',
       'salon': '',
       'programa_educativo': '',
+      'hora_inicio': '',
+      'hora_final': '',
       'dias_json': []
     }
   }
@@ -72,7 +74,16 @@ export class MateriasService {
       errors["programa_educativo"] = this.errorService.required;
     }
     
-    // TODO: PONER LA VALIDACION DEL HORARIO 
+    // TODO: PONER LA VALIDACION DEL HORARIO
+    // Validar hora inicial
+    if (!this.validatorService.required(materia['hora_inicio'])) {
+      errors["hora_inicio"] = this.errorService.required;
+    }
+
+    // Validar hora final
+    if (!this.validatorService.required(materia['hora_final'])) {
+      errors["hora_final"] = this.errorService.required;
+    }
 
     if (materia["dias_json"].length == 0) {
       errors["dias_json"] = "Al menos debes elegir una dia";
@@ -104,5 +115,10 @@ export class MateriasService {
     return this.http.post<any>(`${environment.url_api}/materias/`, materia, requestOptions);
   }
 
+  public obtenerListaMaterias(): Observable<any> {
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    return this.http.get<any>(`${environment.url_api}/lista-materias/`, { headers: headers });
+  }
   
 }
