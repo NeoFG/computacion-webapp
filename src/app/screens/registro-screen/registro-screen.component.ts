@@ -24,6 +24,7 @@ export class RegistroScreenComponent implements OnInit {
   public isAdmin: boolean = false;
   public isAlumno: boolean = false;
   public isMaestro: boolean = false;
+  public isMateria: boolean = false;
   public editar: boolean = false;
   public tipo_user: string = "";
   //Info del usuario
@@ -119,16 +120,25 @@ export class RegistroScreenComponent implements OnInit {
       this.tipo_user = "administrador"
       this.isAlumno = false;
       this.isMaestro = false;
+      this.isMateria = false;
     } else if (event.value == "alumno") {
       this.isAdmin = false;
       this.isAlumno = true;
       this.tipo_user = "alumno"
       this.isMaestro = false;
+      this.isMateria =false;
     } else if (event.value == "maestro") {
       this.isAdmin = false;
       this.isAlumno = false;
       this.isMaestro = true;
       this.tipo_user = "maestro"
+      this.isMateria = false;
+    } else if (event.value == "materia") {
+      this.isAdmin = false;
+      this.isAlumno = false;
+      this.isMaestro = false;
+      this.tipo_user = "materia"
+      this.isMateria = true;
     }
   }
 
