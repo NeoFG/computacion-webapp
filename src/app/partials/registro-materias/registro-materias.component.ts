@@ -99,4 +99,10 @@ export class RegistroMateriasComponent implements OnInit{
     }
   }
 
+  //Select
+  public changeSelect(event: any) {
+    console.log(event.value);
+    this.materia.programa_educativo = event.value;
+  }
+
 }

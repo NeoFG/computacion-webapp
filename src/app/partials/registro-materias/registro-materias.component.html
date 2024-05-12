@@ -39,7 +39,7 @@
             <!-- Programa educativo desplegable -->
             <mat-form-field class="mat-input" appearance="outline">
                 <mat-label>Programa educativo</mat-label>
-                <mat-select [(ngModel)]="materia.programa_educativo">
+                <mat-select [(ngModel)]="materia.programa_educativo" (selectionChange)="changeSelect($event)">
                     <mat-option *ngFor="let programa of programas" [value]="programa.viewValue">
                         {{programa.viewValue}}
                     </mat-option>
