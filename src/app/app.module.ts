@@ -38,6 +38,7 @@ import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-scre
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
 import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
 import { RegistroMateriasComponent } from './partials/registro-materias/registro-materias.component';
+import { MateriasScreenComponent } from './screens/materias-screen/materias-screen.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { RegistroMateriasComponent } from './partials/registro-materias/registro
     MaestrosScreenComponent,
     EliminarUserModalComponent,
     GraficasScreenComponent,
-    RegistroMateriasComponent
+    RegistroMateriasComponent,
+    MateriasScreenComponent
   ],
   imports: [
     BrowserModule,
