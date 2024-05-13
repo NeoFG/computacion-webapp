@@ -120,4 +120,9 @@ export class MateriasService {
     return this.http.get<any>(`${environment.url_api}/lista-materias/`, { headers: headers });
   }
 
+  //Obtener un solo usuario dependiendo su ID
+  public getMateriaByID(idUser: Number) {
+    return this.http.get<any>(`${environment.url_api}/materias/?id=${idUser}`, httpOptions);
+  }
+
 }

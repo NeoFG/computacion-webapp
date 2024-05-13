@@ -6,6 +6,7 @@ import { AlumnosService } from 'src/app/services/alumnos.service';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
 import { Location } from '@angular/common';
+import { MateriasService } from 'src/app/services/materias.service';
 
 @Component({
   selector: 'app-registro-screen',
@@ -38,7 +39,8 @@ export class RegistroScreenComponent implements OnInit {
     private facadeService: FacadeService,
     private administradoresService: AdministradorService,
     private maestrosService: MaestrosService,
-    private alumnosService: AlumnosService
+    private alumnosService: AlumnosService,
+    private materiasService: MateriasService
   ) { }
 
   ngOnInit(): void {
@@ -104,6 +106,18 @@ export class RegistroScreenComponent implements OnInit {
           console.log("Datos alumno: ", this.user);
         }, (error) => {
           alert("No se pudieron obtener los datos del usuario para editar");
+        }
+      );
+    } else if (this.rol == "materia") {
+      this.materiasService.getMateriaByID(this.idUser).subscribe(
+        (response) => {
+          this.user = response;
+          this.user.tipo_usuario = this.rol;
+          this.isMateria = true;
+          console.log("Datos materia: ", this.user);
+        },
+        (error) => {
+          alert("No se pudieron obtener los datos de la materia para editar");
         }
       );
     }

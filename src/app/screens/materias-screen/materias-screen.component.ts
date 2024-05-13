@@ -96,8 +96,7 @@ export class MateriasScreenComponent implements OnInit{
 
   //Funcion para editar
   public goEditar(idUser: number) {
-    // this.router.navigate(["registro-usuarios/maestro/" + idUser]);
-    this.router.navigate(["registro/" + idUser]);
+    this.router.navigate(["registro-usuarios/materia/" + idUser]);
   }
 
   public delete(idUser: number) {

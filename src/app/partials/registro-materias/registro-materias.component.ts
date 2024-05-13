@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MateriasService } from 'src/app/services/materias.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FacadeService } from 'src/app/services/facade.service';
 
 declare var $: any;
 
@@ -12,12 +13,15 @@ declare var $: any;
 })
 export class RegistroMateriasComponent implements OnInit{
   
-  // No estoy muy seguro de este lo puse en el registro-screen.component.html y en el ngOnInit
-  @Input() rol: string = ""; 
+  // Estos Input lo puse en el registro-screen.component.html y en el ngOnInit
+  @Input() rol: string = "";
+  @Input() datos_user: any = {};
 
   public materia: any = {};
   public editar: boolean = false;
   public errors: any = {};
+  public idUser: Number = 0;
+  public token: string = "";
 
   // Check
   public valoresCheckbox: any = [];
@@ -45,11 +49,25 @@ export class RegistroMateriasComponent implements OnInit{
     private materiasService: MateriasService,
     private router: Router,
     public activatedRoute: ActivatedRoute,
+    private facadeService: FacadeService
   ){}
 
   ngOnInit(): void {
-    this.materia = this.materiasService.esquemaMateria();
-    this.materia.rol = this.rol;
+
+    //El primer if valida si existe un parámetro en la URL
+    if (this.activatedRoute.snapshot.params['id'] != undefined) {
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      console.log("ID User: ", this.idUser);
+      //Al iniciar la vista asignamos los datos del user
+      this.materia = this.datos_user;
+    } else {
+      this.materia = this.materiasService.esquemaMateria();
+      this.materia.rol = this.rol;
+      this.token = this.facadeService.getSessionToken();
+    }
+    //Imprimir datos en consola
     console.log("Materia: ", this.materia);
   }
 
@@ -105,7 +123,7 @@ export class RegistroMateriasComponent implements OnInit{
   }
 
   public revisarSeleccion(nombre: string) {
-    if (this.materia.materias_json) {
+    if (this.materia.dias_json) {
       var busqueda = this.materia.dias_json.find((element) => element == nombre);
       if (busqueda != undefined) {
         return true;
