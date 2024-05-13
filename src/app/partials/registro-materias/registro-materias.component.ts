@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MateriasService } from 'src/app/services/materias.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 declare var $: any;
 
 @Component({
@@ -40,7 +42,9 @@ export class RegistroMateriasComponent implements OnInit{
 
   constructor(
     private location: Location,
-    private materiasService: MateriasService
+    private materiasService: MateriasService,
+    private router: Router,
+    public activatedRoute: ActivatedRoute,
   ){}
 
   ngOnInit(): void {
@@ -53,18 +57,32 @@ export class RegistroMateriasComponent implements OnInit{
     this.location.back();
   }
 
-  public registrar(){
-    //Validar
+  public registrar() {
+    
+    // Validar
     this.errors = [];
 
     this.errors = this.materiasService.validarMateria(this.materia, this.editar);
-    // Si viene vacio me retorna falso
+    // Si viene vacío me retorna falso
     if (!$.isEmptyObject(this.errors)) {
       return false;
     }
 
-    // TODO: Despues registramos
-
+    // Realizar el registro
+    this.materiasService.registrarMaterias(this.materia).subscribe(
+      (response) => {
+        // Registro exitoso
+        console.log("Materia registrada correctamente:", response);
+        // Puedes agregar aquí la lógica para redirigir a otra página o mostrar un mensaje de éxito  this.router.navigate(["/"]);
+        this.router.navigate(["home"]);
+      },
+      (error) => {
+        // Manejo de errores
+        console.error("Error al registrar la materia:", error);
+        alert("No se pudo registrar la materia");
+        // Puedes agregar aquí la lógica para mostrar un mensaje de error al usuario
+      }
+    );
   }
 
   public actualizar(){
