@@ -141,4 +141,39 @@ export class RegistroMateriasComponent implements OnInit{
     this.materia.programa_educativo = event.value;
   }
 
+  // Para la hora
+  public formatHora(hora: string): string {
+    if (!hora) return '';
+
+    // Buscar si la hora contiene 'AM' o 'PM' y extraer la parte anterior
+    const [time, modifier] = hora.split(' ');
+    let [hours, minutes] = time.split(':');
+
+    if (modifier) {
+      if (modifier === 'PM' && hours !== '12') {
+        hours = (parseInt(hours, 10) + 12).toString();
+      }
+      if (modifier === 'AM' && hours === '12') {
+        hours = '00';
+      }
+    }
+
+    const formattedHora = `${hours}:${minutes}`;
+    console.log("Hora formateada: ", formattedHora);
+    return formattedHora;
+  }
+
+  public changeHoraInicio(event: any) {
+    const value = event.target.value;
+    this.materia.hora_inicio = this.formatHora(value);
+    console.log("Hora inicio: ", this.materia.hora_inicio);
+  }
+
+  public changeHoraFinal(event: any) {
+    const value = event.target.value;
+    this.materia.hora_final = this.formatHora(value);
+    console.log("Hora final: ", this.materia.hora_final);
+  }
+
+
 }
