@@ -105,6 +105,31 @@ export class RegistroMateriasComponent implements OnInit{
 
   public actualizar(){
 
+    // Validar
+    this.errors = [];
+
+    this.errors = this.materiasService.validarMateria(this.materia, this.editar);
+    // Si viene vacío me retorna falso
+    if (!$.isEmptyObject(this.errors)) {
+      return false;
+    }
+
+    console.log("Paso la validacion");
+    // Invoco a mi servicio de actualizar
+    this.materiasService.editarMateria(this.materia).subscribe(
+      (response) => {
+        // Registro exitoso
+        console.log("Materia actualizada correctamente:", response);
+        // Puedes agregar aquí la lógica para redirigir a otra página o mostrar un mensaje de éxito  this.router.navigate(["/"]);
+        this.router.navigate(["home"]);
+      },
+      (error) => {
+        // Manejo de errores
+        console.error("Error al registrar la materia:", error);
+        alert("No se pudo registrar la materia");
+        // Puedes agregar aquí la lógica para mostrar un mensaje de error al usuario
+      }
+    );
   }
 
   public checkboxChange(event: any) {

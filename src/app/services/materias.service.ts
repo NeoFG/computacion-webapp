@@ -125,4 +125,11 @@ export class MateriasService {
     return this.http.get<any>(`${environment.url_api}/materias/?id=${idUser}`, httpOptions);
   }
 
+  // Servicio para actualizar materia
+  public editarMateria(data: any): Observable<any> {
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    return this.http.put<any>(`${environment.url_api}/materias-edit/`, data, { headers: headers });
+  }
+
 }
