@@ -14,6 +14,8 @@ export class GraficasScreenComponent implements OnInit {
   // Declara pieChartData como propiedad de la clase
   pieChartData: any; // o puedes definir su tipo específico según tus necesidades
   doughnutChartData : any;
+  lineChartData : any;
+  barChartData : any;
 
 
   totalAdmins: number = 0;
@@ -44,12 +46,61 @@ export class GraficasScreenComponent implements OnInit {
         // Actualizar los datos de los graficos
         this.actualizarDatosGraficoCircular();
         this.actualizarDatosGraficoDona();
+        this.actualizarDatosGraficoHistograma();
+        this.actualizarDatosGraficoBarras();
 
       }, (error) => {
         alert("No se pudo obtener el total de cada rol de usuarios");
       }
     );
   }
+
+  // Metodo para actualizar los datos del grafico Histograma
+  private actualizarDatosGraficoHistograma(){
+    this.lineChartData = {
+      labels: ["Administradores", "Maestros", "Alumnos"],
+      datasets: [
+        {
+          data: [this.totalAdmins, this.totalMaestros, this.totalAlumnos],
+          label: 'Registro de usuarios',
+          backgroundColor: [
+            '#FCFF44',
+            '#F1C8F2',
+            '#31E731'
+          ]
+        }
+      ]
+    };
+  }
+  lineChartOption = {
+    responsive: false
+  }
+  lineChartPlugins = [DatalabelsPlugin];
+
+
+  // Metodo para actualizar los datos del grafico Barras
+  private actualizarDatosGraficoBarras(){
+    this.barChartData = {
+      labels: ["Administradores", "Maestros", "Alumnos"],
+      datasets: [
+        {
+          data: [this.totalAdmins, this.totalMaestros, this.totalAlumnos],
+          label: 'Registro de usuarios',
+          backgroundColor: [
+            '#FCFF44',
+            '#F1C8F2',
+            '#31E731'
+          ]
+        }
+      ]
+    }
+  }
+
+  // Declaración de las propiedades
+  barChartOption = {
+    responsive: false
+  }
+  barChartPlugins = [DatalabelsPlugin];
 
   // Método para actualizar los datos del gráfico circular
   private actualizarDatosGraficoCircular() {
